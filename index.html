@@ -7,7 +7,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --vhs-blue: #004aad;
+            --vhs-blue-deep: #003375; /* Iets donkerder blauw voor verloop */
+            --vhs-blue-base: #004aad; /* Jouw originele blauw */
             --vhs-gold: #ffde59;
             --vhs-white: #ffffff;
         }
@@ -20,88 +21,112 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: var(--vhs-blue);
             font-family: 'Montserrat', sans-serif;
             overflow: hidden;
+            /* De geanimeerde gradient achtergrond */
+            background: radial-gradient(circle at center, var(--vhs-blue-base), var(--vhs-blue-deep));
+            background-size: 200% 200%;
+            animation: gradientMove 10s ease infinite alternate;
         }
 
-        /* Subtiele achtergrond animatie */
-        .bg-overlay {
-            position: absolute;
-            width: 150%;
-            height: 150%;
-            background: radial-gradient(circle, rgba(255,222,89,0.05) 0%, rgba(0,74,173,0) 70%);
-            animation: pulse 8s infinite alternate;
-            z-index: 1;
-        }
-
-        @keyframes pulse {
-            from { transform: scale(1); opacity: 0.5; }
-            to { transform: scale(1.2); opacity: 1; }
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
         }
 
         .container {
             text-align: center;
             z-index: 10;
-            padding: 20px;
-            max-width: 500px;
+            padding: 40px;
+            width: 90%;
+            max-width: 1200px; /* Ruimer voor de volle breedte tekst */
         }
 
         .logo {
             width: 100%;
-            max-width: 400px;
+            max-width: 350px;
             height: auto;
-            margin-bottom: 40px;
-            animation: fadeIn 2s ease-out;
+            margin-bottom: 50px;
+            /* Subtiele zweef animatie voor het logo */
+            animation: floating 4s ease-in-out infinite, fadeIn 2s ease-out;
+        }
+
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
         }
 
         .content {
             opacity: 0;
-            animation: fadeIn 2s ease-out 0.5s forwards;
+            animation: fadeIn 2s ease-out 0.8s forwards;
         }
 
         h1 {
             color: var(--vhs-gold);
             text-transform: uppercase;
-            letter-spacing: 6px;
-            font-size: 1.2rem;
+            letter-spacing: 8px;
+            font-size: clamp(1rem, 3vw, 1.5rem);
             font-weight: 600;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .line {
-            width: 40px;
-            height: 2px;
+            width: 60px;
+            height: 3px;
             background: var(--vhs-gold);
-            margin: 20px auto;
+            margin: 25px auto;
+            opacity: 1;
         }
 
-        p {
+        p.wide-text {
             color: var(--vhs-white);
             font-weight: 200;
-            letter-spacing: 2px;
-            line-height: 1.6;
-            font-size: 0.9rem;
+            letter-spacing: 4px; /* Iets meer spacing voor luxe uitstraling */
+            line-height: 1.8;
+            font-size: clamp(0.8rem, 2vw, 1.1rem);
+            margin: 0;
+            white-space: nowrap; /* Zorgt dat het op één lijn blijft indien mogelijk */
+        }
+
+        .footer-mail {
+            margin-top: 50px;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            color: var(--vhs-white);
+            opacity: 0.4;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .footer-mail:hover {
+            opacity: 1;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive voor kleine schermen zodat tekst niet buiten beeld valt */
+        @media (max-width: 768px) {
+            p.wide-text {
+                white-space: normal;
+                letter-spacing: 2px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="bg-overlay"></div>
-
     <div class="container">
-        <img src="afbeeldingen/logo/6.png" alt="Van Hoof Studio" class="logo">
+        <img src="afbeeldingen/logo/4.png" alt="Van Hoof Studio" class="logo">
         
         <div class="content">
             <h1>Coming Soon</h1>
             <div class="line"></div>
-            <p>Momenteel werken wij aan een nieuwe digitale ervaring.<br>Onze excuses voor het ongemak.</p>
-            <p style="margin-top: 30px; font-size: 0.7rem; opacity: 0.6;">INFO@VANHOOFSTUDIO.NL</p>
+            <p class="wide-text">MOMENTEEL WERKEN WIJ AAN EEN NIEUWE DIGITALE ERVARING</p>
+            <a href="mailto:info@vanhoofstudio.nl" class="footer-mail">VANHOOFSTUDIO@OUTLOOK.COM</a>
         </div>
     </div>
 
