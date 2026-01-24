@@ -3,392 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>van Hoof Studio | 3D Visualisatie</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@200;400;600&display=swap" rel="stylesheet">
+    <title>Van Hoof Studio | Under Construction</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
             --vhs-blue: #004aad;
             --vhs-gold: #ffde59;
             --vhs-white: #ffffff;
-            --vhs-grey: #f8f8f8;
-            --vhs-black: #0e0e0e;
-            --transition: all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
-        * { box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body { margin: 0; font-family: 'Montserrat', sans-serif; background: var(--vhs-white); color: var(--vhs-black); overflow-x: hidden; }
-
-        /* --- Header --- */
-        header {
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             background-color: var(--vhs-blue);
-            padding: 8px 8%;
-            display: flex; justify-content: space-between; align-items: center;
-            position: fixed; top: 0; width: 100%; z-index: 1000;
-            border-bottom: 2px solid var(--vhs-gold);
-            transition: var(--transition);
-            height: 80px;
-        }
-
-        header.scrolled {
-            background-color: rgba(0, 74, 173, 0.85);
-            backdrop-filter: blur(15px);
-            height: 70px;
-        }
-
-        .logo-container { display: flex; align-items: center; height: 100%; }
-        .logo-container img { height: 140%; width: auto; display: block; }
-
-        nav a { color: white; text-decoration: none; margin-left: 35px; font-weight: 600; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px; transition: 0.3s; }
-        nav a:hover { color: var(--vhs-gold); }
-
-        /* --- Hero Sectie met Verbeterde Animatie --- */
-        .hero {
-            height: 100vh; position: relative; overflow: hidden;
-            display: flex; align-items: center; justify-content: center;
-        }
-        
-        .hero-slide {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-size: cover; background-position: center;
-            opacity: 0; transition: opacity 1.5s ease-in-out; z-index: -2;
-            filter: grayscale(100%);
-            transform: scale(1);
-        }
-        
-        /* De 'active' class zorgt voor de fade-in en start de zoom */
-        .hero-slide.active { 
-            opacity: 1; 
-            animation: continuousZoom 12s linear forwards; 
-        }
-
-        /* Constante zoom zonder terugslag */
-        @keyframes continuousZoom { 
-            from { transform: scale(1); } 
-            to { transform: scale(1.15); } 
-        }
-
-        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); z-index: -1; }
-        
-        .hero-content { z-index: 10; width: 100%; max-width: 600px; padding: 0 20px; text-align: center; }
-        .hero-content img.center-logo {
-            width: 100%;
-            height: auto;
-            max-width: 450px;
-        }
-
-        /* --- Koppen Styling --- */
-        .section-header { text-align: center; margin-bottom: 60px; }
-        .section-header h2 { 
             font-family: 'Montserrat', sans-serif;
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--vhs-blue); 
-            text-transform: uppercase;
-            letter-spacing: 5px;
-            margin: 0; 
-        }
-        .line { width: 40px; height: 3px; background: var(--vhs-gold); margin: 15px auto; }
-
-        /* --- Over Mij Sectie --- */
-        .about-section { background: var(--vhs-grey); padding: 120px 8% 100px 8%; }
-        .about-container {
-            display: flex; align-items: center; gap: 60px; max-width: 1000px; margin: 0 auto;
-            background: white; padding: 50px; border-radius: 4px; box-shadow: 0 15px 40px rgba(0,0,0,0.04);
-            opacity: 0; transform: translateY(40px); transition: all 1.2s cubic-bezier(0.165, 0.84, 0.44, 1);
-        }
-        .about-container.visible { opacity: 1; transform: translateY(0); }
-        .about-image { flex: 0 0 280px; width: 280px; height: 280px; border-radius: 50%; overflow: hidden; border: 4px solid var(--vhs-gold); cursor: pointer; background: #eee; }
-        .about-image img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); transition: 0.8s; }
-        .about-image:hover img { filter: grayscale(0%); transform: scale(1.1); }
-        
-        .about-text h3 { 
-            font-family: 'Montserrat', sans-serif; 
-            font-size: 1.4rem; 
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--vhs-blue); 
-            margin-top: 0; 
-        }
-        .about-text p { line-height: 1.8; color: #444; }
-
-        /* --- Studio Sectie --- */
-        #studio { 
-            background: var(--vhs-white); 
-            padding: 140px 8% 120px 8%; 
-        }
-        .studio-grid { 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: 30px; 
-            max-width: 1400px; 
-            margin: 0 auto; 
-        }
-        .project-card { position: relative; height: 500px; overflow: hidden; cursor: pointer; background: var(--vhs-black); }
-        .project-card img { width: 100%; height: 100%; object-fit: cover; transition: all 1.2s ease; opacity: 0.8; }
-        .project-card:hover img { transform: scale(1.05); opacity: 0.5; }
-        .project-info { position: absolute; bottom: 0; left: 0; width: 100%; padding: 40px; color: white; transition: var(--transition); }
-        .project-info h3 { font-family: 'Playfair Display', serif; font-size: 1.8rem; margin: 0; color: var(--vhs-gold); }
-
-        /* --- Contact Sectie --- */
-        .contact-section { background: var(--vhs-grey); padding: 120px 8%; }
-        .contact-container { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
-        
-        .contact-info h3 { 
-            font-family: 'Montserrat', sans-serif; 
-            font-size: 1.4rem; 
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--vhs-blue); 
-            margin-top: 0; 
-        }
-        .contact-info p { line-height: 1.6; color: #555; }
-        
-        .contact-form input, .contact-form textarea {
-            width: 100%;
-            padding: 15px;
-            margin-bottom: 10px;
-            border: 1px solid #ddd;
-            outline: none;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 14px;
-        }
-        .contact-form textarea {
-            height: 120px;
-            resize: none;
-            margin-bottom: 15px;
-        }
-        ::placeholder {
-            color: #888;
-            font-size: 14px;
-            opacity: 1;
+            overflow: hidden;
         }
 
-        .btn-submit { 
-            background: var(--vhs-blue); 
-            color: white; 
-            border: 1px solid var(--vhs-blue); 
-            padding: 18px 50px; 
-            text-transform: uppercase; 
-            letter-spacing: 2px; 
-            cursor: pointer; 
-            font-weight: 600; 
-            font-size: 0.8rem;
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            position: relative;
+        /* Subtiele achtergrond animatie */
+        .bg-overlay {
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            background: radial-gradient(circle, rgba(255,222,89,0.05) 0%, rgba(0,74,173,0) 70%);
+            animation: pulse 8s infinite alternate;
             z-index: 1;
         }
-        .btn-submit:hover {
-            background: var(--vhs-gold);
-            color: var(--vhs-black);
-            border-color: var(--vhs-gold);
-            box-shadow: 0 5px 15px rgba(255, 222, 89, 0.3);
+
+        @keyframes pulse {
+            from { transform: scale(1); opacity: 0.5; }
+            to { transform: scale(1.2); opacity: 1; }
         }
 
-        /* --- Footer --- */
-        footer { 
-            background: var(--vhs-blue); 
-            color: white; 
-            padding: 60px 8% 30px 8%; 
-            text-align: center; 
-            border-top: 4px solid var(--vhs-gold); 
+        .container {
+            text-align: center;
+            z-index: 10;
+            padding: 20px;
+            max-width: 500px;
         }
-        .footer-logo img { height: 80px; width: auto; margin-bottom: 20px; }
-        .footer-copyright { 
-            margin-top: 40px; 
-            font-size: 0.75rem; 
-            opacity: 0.7; 
-            letter-spacing: 1px;
+
+        .logo {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            margin-bottom: 40px;
+            animation: fadeIn 2s ease-out;
+        }
+
+        .content {
+            opacity: 0;
+            animation: fadeIn 2s ease-out 0.5s forwards;
+        }
+
+        h1 {
+            color: var(--vhs-gold);
             text-transform: uppercase;
+            letter-spacing: 6px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
         }
 
-        /* --- Lightbox --- */
-        #lightbox {
-            position: fixed; z-index: 2000; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.98); display: none; justify-content: center; align-items: center;
+        .line {
+            width: 40px;
+            height: 2px;
+            background: var(--vhs-gold);
+            margin: 20px auto;
         }
-        #lightbox-img { max-width: 90%; max-height: 85%; border: 1px solid var(--vhs-gold); }
-        .close-btn, .nav-btn { position: absolute; color: white; cursor: pointer; font-size: 40px; user-select: none; }
-        .close-btn { top: 20px; right: 40px; }
-        .prev { left: 20px; } .next { right: 20px; }
 
-        @media (max-width: 900px) {
-            .studio-grid { grid-template-columns: 1fr; }
-            .about-container { flex-direction: column; text-align: center; }
-            .contact-container { grid-template-columns: 1fr; gap: 40px; }
+        p {
+            color: var(--vhs-white);
+            font-weight: 200;
+            letter-spacing: 2px;
+            line-height: 1.6;
+            font-size: 0.9rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
 
-    <header id="mainHeader">
-        <a href="#" class="logo-container"><img src="afbeeldingen/logo/4.png" alt="Logo"></a>
-        <nav>
-            <a href="#about">Over Mij</a>
-            <a href="#studio">Studio</a>
-            <a href="#contact">Contact</a>
-        </nav>
-    </header>
+    <div class="bg-overlay"></div>
 
-    <section class="hero" id="heroSection">
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <img src="afbeeldingen/logo/6.png" alt="Van Hoof Studio" class="center-logo">
-        </div>
-    </section>
-
-    <section id="about" class="about-section">
-        <div class="section-header">
-            <h2>Over Mij</h2>
+    <div class="container">
+        <img src="afbeeldingen/logo/6.png" alt="Van Hoof Studio" class="logo">
+        
+        <div class="content">
+            <h1>Coming Soon</h1>
             <div class="line"></div>
+            <p>Momenteel werken wij aan een nieuwe digitale ervaring.<br>Onze excuses voor het ongemak.</p>
+            <p style="margin-top: 30px; font-size: 0.7rem; opacity: 0.6;">INFO@VANHOOFSTUDIO.NL</p>
         </div>
-        <div class="about-container" id="aboutBox">
-            <div class="about-image">
-                <img src="afbeeldingen/logo/5.png" alt="Portret">
-            </div>
-            <div class="about-text">
-                <h3>Passie voor perfectie</h3>
-                <p>Achter Van Hoof Studio sta ik: een gedreven 3D-visualisator met een scherp oog voor detail. Ik help ontwerpen tastbaar te maken nog voordat de eerste steen is gelegd.</p>
-                <p>Met oog voor sfeer en architectonische precisie vertaal ik visies naar beelden die overtuigen.</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="studio">
-        <div class="section-header">
-            <h2>Studio</h2>
-            <div class="line"></div>
-        </div>
-        <div class="studio-grid">
-            <div class="project-card" onclick="openLightbox('exterieur')">
-                <img src="afbeeldingen/ext/1.1.jpg" alt="Exterieur">
-                <div class="project-info"><h3>Exterieur</h3></div>
-            </div>
-            <div class="project-card" onclick="openLightbox('tuin')">
-                <img src="afbeeldingen/ext/2.1.jpg" alt="Tuinontwerp">
-                <div class="project-info"><h3>Tuinontwerp</h3></div>
-            </div>
-            <div class="project-card" onclick="openLightbox('interieur')">
-                <img src="afbeeldingen/int/1.1.png" alt="Interieur">
-                <div class="project-info"><h3>Interieur</h3></div>
-            </div>
-            <div class="project-card" onclick="openLightbox('multi')">
-                <img src="afbeeldingen/int/3.1.png" alt="Multifunctionele ruimtes">
-                <div class="project-info"><h3>Multifunctionele ruimtes</h3></div>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" class="contact-section">
-        <div class="section-header">
-            <h2>Contact</h2>
-            <div class="line"></div>
-        </div>
-        <div class="contact-container">
-            <div class="contact-info">
-                <h3>Samenwerken?</h3>
-                <p>Laten we samen iets bijzonders creëren. Heb je een project dat een visuele vertaalslag nodig heeft of ben je benieuwd wat ik voor jouw ontwerp kan betekenen? <br><br>Stuur een berichtje en ik neem zo snel mogelijk contact met je op.</p>
-                <p><strong>Email:</strong> info@vanhoofstudio.nl</p>
-            </div>
-            <form class="contact-form">
-                <input type="text" placeholder="Naam">
-                <input type="email" placeholder="E-mail">
-                <textarea placeholder="Je bericht"></textarea>
-                <button type="submit" class="btn-submit">Bericht versturen</button>
-            </form>
-        </div>
-    </section>
-
-    <div id="lightbox">
-        <span class="close-btn" onclick="closeLightbox()">&times;</span>
-        <span class="nav-btn prev" onclick="changeImg(-1)">&#10094;</span>
-        <img id="lightbox-img" src="">
-        <span class="nav-btn next" onclick="changeImg(1)">&#10095;</span>
     </div>
 
-    <footer>
-        <div class="footer-content">
-            <div class="footer-logo">
-                <img src="afbeeldingen/logo/4.png" alt="Van Hoof Studio Logo">
-            </div>
-            <p>Architectonische 3D Visualisaties</p>
-            <div class="footer-copyright">
-                &copy; 2026 Van Hoof Studio | Alle rechten voorbehouden
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        const database = {
-            'exterieur': ['afbeeldingen/ext/1.1.jpg', 'afbeeldingen/ext/1.2.jpg', 'afbeeldingen/ext/1.3.jpg', 'afbeeldingen/ext/1.4.jpg'],
-            'tuin': ['afbeeldingen/ext/2.1.jpg', 'afbeeldingen/ext/2.3.jpg', 'afbeeldingen/ext/2.2.jpg'],
-            'interieur': ['afbeeldingen/int/1.1.png', 'afbeeldingen/int/1.2.png', 'afbeeldingen/int/1.3.png', 'afbeeldingen/int/2.1.jpg', 'afbeeldingen/int/2.2.jpg', 'afbeeldingen/int/2.3.jpg'],
-            'multi': ['afbeeldingen/int/3.1.png', 'afbeeldingen/int/3.2.png', 'afbeeldingen/int/3.4.png', 'afbeeldingen/int/3.3.png']
-        };
-
-        function initHeroSlides() {
-            const hero = document.getElementById('heroSection');
-            let allImages = [...new Set(Object.values(database).flat())];
-            
-            allImages.forEach((imgUrl, index) => {
-                const slide = document.createElement('div');
-                slide.className = 'hero-slide';
-                if (index === 0) slide.classList.add('active');
-                slide.style.backgroundImage = `url('${imgUrl}')`;
-                hero.appendChild(slide);
-            });
-
-            let currentSlide = 0;
-            const slides = document.querySelectorAll('.hero-slide');
-            
-            if(slides.length > 0) {
-                setInterval(() => {
-                    // Verwijder active class van huidige slide
-                    slides[currentSlide].classList.remove('active');
-                    
-                    // Ga naar volgende slide
-                    currentSlide = (currentSlide + 1) % slides.length;
-                    
-                    // Voeg active toe aan nieuwe slide (start direct met inzoomen door de CSS animatie)
-                    slides[currentSlide].classList.add('active');
-                }, 6000); // Tijd tussen foto's
-            }
-        }
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('visible');
-            });
-        }, { threshold: 0.1 });
-
-        document.addEventListener('DOMContentLoaded', () => {
-            initHeroSlides();
-            const aboutBox = document.getElementById('aboutBox');
-            if(aboutBox) observer.observe(aboutBox);
-        });
-
-        window.onscroll = () => {
-            const header = document.getElementById('mainHeader');
-            window.pageYOffset > 50 ? header.classList.add('scrolled') : header.classList.remove('scrolled');
-        };
-
-        let currentList = []; let currentIndex = 0;
-        function openLightbox(id) {
-            currentList = database[id]; currentIndex = 0;
-            document.getElementById('lightbox-img').src = currentList[0];
-            document.getElementById('lightbox').style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-        function closeLightbox() { 
-            document.getElementById('lightbox').style.display = 'none'; 
-            document.body.style.overflow = 'auto';
-        }
-        function changeImg(n) {
-            currentIndex = (currentIndex + n + currentList.length) % currentList.length;
-            document.getElementById('lightbox-img').src = currentList[currentIndex];
-        }
-    </script>
 </body>
 </html>
