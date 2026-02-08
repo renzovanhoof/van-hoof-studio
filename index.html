@@ -61,7 +61,7 @@
         
         @media screen and (max-width: 768px) {
             nav { padding: 20px 25px; }
-            .nav-gradient-overlay { display: none; } /* Fade weg op mobiel */
+            .nav-gradient-overlay { display: none; }
             #menu-toggle { right: 20px !important; top: 20px !important; width: 40px !important; height: 40px !important; }
             #expanded-nav { 
                 right: 0 !important; 
@@ -74,7 +74,7 @@
                 justify-content: center !important;
             }
             #expanded-nav a { margin: 15px 0 !important; font-size: 1rem !important; }
-            #timeline-nav { display: none; } /* Tijdlijn weg op mobiel voor meer ruimte */
+            #timeline-nav { display: none; }
         }
 
         .nav-logo img { 
@@ -295,7 +295,7 @@
 
         /* --- GALLERY SECTION --- */
         #gallery {
-            height: 600vh; /* Aangepaste hoogte voor normale scroll-snelheid */
+            height: 600vh;
             position: relative;
             background: #050505;
         }
@@ -426,18 +426,23 @@
             .category-header .main-title { font-size: 0.8rem; letter-spacing: 12px; }
         }
 
-        .horizontal-scroll-container { display: flex; padding: 0 8vw; gap: 5vw; will-change: transform; }
+        .horizontal-scroll-container { display: flex; padding: 0 8vw; gap: 5vw; will-change: transform; align-items: center; }
 
         .project-card {
-            min-width: 85vw; height: 300px; flex-shrink: 0;
+            min-width: 85vw; height: auto; max-height: 70vh; flex-shrink: 0;
             position: relative; overflow: hidden; background: var(--grey);
+            display: flex; align-items: center; justify-content: center;
         }
         @media screen and (min-width: 768px) {
             .project-card { min-width: 650px; height: 450px; }
         }
-        .project-card img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1); transition: 0.8s ease; }
+        .project-card img { 
+            width: 100%; height: 100%; object-fit: contain; 
+            filter: grayscale(1); transition: 0.8s ease;
+            display: block;
+        }
         .project-card:hover img { filter: grayscale(0); transform: scale(1.05); }
-        .project-info { position: absolute; bottom: 15px; left: 15px; opacity: 1; }
+        .project-info { position: absolute; bottom: 15px; left: 15px; opacity: 1; z-index: 5; }
         @media screen and (min-width: 768px) {
             .project-info { bottom: 20px; left: 20px; opacity: 0; }
             .project-card:hover .project-info { opacity: 1; }
@@ -526,11 +531,11 @@
                     <span class="main-title">EXTERIEUR</span>
                 </div>
                 <div class="horizontal-scroll-container">
-                    <div class="project-card"><img src="afbeeldingen/ext/1.1.jpg"><div class="project-info"><h4>PROJECT 1.1</h4></div></div>
-                    <div class="project-card"><img src="afbeeldingen/ext/1.2.jpg"><div class="project-info"><h4>PROJECT 1.2</h4></div></div>
-                    <div class="project-card"><img src="afbeeldingen/ext/1.3.jpg"><div class="project-info"><h4>PROJECT 1.3</h4></div></div>
-                    <div class="project-card"><img src="afbeeldingen/ext/2.1.jpg"><div class="project-info"><h4>PROJECT 2.1</h4></div></div>
-                    <div class="project-card"><img src="afbeeldingen/ext/2.2.jpg"><div class="project-info"><h4>PROJECT 2.2</h4></div></div>
+                    <div class="project-card"><img src="afbeeldingen/ext/1.1.jpg" loading="lazy"><div class="project-info"><h4>PROJECT 1.1</h4></div></div>
+                    <div class="project-card"><img src="afbeeldingen/ext/1.2.jpg" loading="lazy"><div class="project-info"><h4>PROJECT 1.2</h4></div></div>
+                    <div class="project-card"><img src="afbeeldingen/ext/1.3.jpg" loading="lazy"><div class="project-info"><h4>PROJECT 1.3</h4></div></div>
+                    <div class="project-card"><img src="afbeeldingen/ext/2.1.jpg" loading="lazy"><div class="project-info"><h4>PROJECT 2.1</h4></div></div>
+                    <div class="project-card"><img src="afbeeldingen/ext/2.2.jpg" loading="lazy"><div class="project-info"><h4>PROJECT 2.2</h4></div></div>
                 </div>
             </div>
         </section>
@@ -554,15 +559,15 @@
                     <span class="main-title">INTERIEUR</span>
                 </div>
                 <div class="horizontal-scroll-container" data-direction="rtl" id="int-scroll-track">
-                    <div class="project-card"><img src="afbeeldingen/int/1.1.png"><div class="project-info"><h4>PROJECT 1.1</h4></div></div>
-                    <div class="project-card"><img src="afbeeldingen/int/1.2.png"><div class="project-info"><h4>PROJECT 1.2</h4></div></div>
-                    <div class="project-card"><img src="afbeeldingen/int/1.3.png"><div class="project-info"><h4>PROJECT 1.3</h4></div></div>
-                    <div class="project-card"><img src="afbeeldingen/int/2.1.jpg"><div class="project-info"><h4>PROJECT 2.1</h4></div></div>
-                    <div class="project-card"><img src="afbeeldingen/int/2.2.jpg"><div class="project-info"><h4>PROJECT 2.2</h4></div></div>
-                    <div class="project-card"><img src="afbeeldingen/int/2.3.jpg"><div class="project-info"><h4>PROJECT 2.3</h4></div></div>
-                    <div class="project-card"><img src="afbeeldingen/int/3.1.png"><div class="project-info"><h4>PROJECT 3.1</h4></div></div>
-                    <div class="project-card"><img src="afbeeldingen/int/3.2.png"><div class="project-info"><h4>PROJECT 3.2</h4></div></div>
-                    <div class="project-card"><img src="afbeeldingen/int/3.4.png"><div class="project-info"><h4>PROJECT 3.4</h4></div></div>
+                    <div class="project-card"><img src="afbeeldingen/int/1.1.png" loading="lazy"><div class="project-info"><h4>PROJECT 1.1</h4></div></div>
+                    <div class="project-card"><img src="afbeeldingen/int/1.2.png" loading="lazy"><div class="project-info"><h4>PROJECT 1.2</h4></div></div>
+                    <div class="project-card"><img src="afbeeldingen/int/1.3.png" loading="lazy"><div class="project-info"><h4>PROJECT 1.3</h4></div></div>
+                    <div class="project-card"><img src="afbeeldingen/int/2.1.jpg" loading="lazy"><div class="project-info"><h4>PROJECT 2.1</h4></div></div>
+                    <div class="project-card"><img src="afbeeldingen/int/2.2.jpg" loading="lazy"><div class="project-info"><h4>PROJECT 2.2</h4></div></div>
+                    <div class="project-card"><img src="afbeeldingen/int/2.3.jpg" loading="lazy"><div class="project-info"><h4>PROJECT 2.3</h4></div></div>
+                    <div class="project-card"><img src="afbeeldingen/int/3.1.png" loading="lazy"><div class="project-info"><h4>PROJECT 3.1</h4></div></div>
+                    <div class="project-card"><img src="afbeeldingen/int/3.2.png" loading="lazy"><div class="project-info"><h4>PROJECT 3.2</h4></div></div>
+                    <div class="project-card"><img src="afbeeldingen/int/3.4.png" loading="lazy"><div class="project-info"><h4>PROJECT 3.4</h4></div></div>
                 </div>
             </div>
         </section>
@@ -573,7 +578,7 @@
                     <span class="top-label">BSc</span>
                     <span class="main-title">Architectural Sheet</span>
                 </div>
-                <img src="afbeeldingen/bsc_b/1.png" class="bsc-subpage-img" alt="Architectural Sheet">
+                <img src="afbeeldingen/bsc_b/1.png" class="bsc-subpage-img" alt="Architectural Sheet" loading="lazy">
             </div>
         </section>
 
@@ -583,7 +588,7 @@
                     <span class="top-label">BSc</span>
                     <span class="main-title">Construction Details</span>
                 </div>
-                <img src="afbeeldingen/bsc_b/2.png" class="bsc-subpage-img" alt="Construction Details">
+                <img src="afbeeldingen/bsc_b/2.png" class="bsc-subpage-img" alt="Construction Details" loading="lazy">
             </div>
         </section>
 
@@ -672,22 +677,22 @@
                 </div>
                 <div class="gallery-track-container">
                     <div class="gallery-container" id="gallery-track">
-                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (1).jpg"></div>
-                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (2).jpg"></div>
-                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (3).jpg"></div>
-                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (4).jpg"></div>
-                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (5).jpg"></div>
-                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (6).jpg"></div>
-                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (7).jpg"></div>
-                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (8).jpg"></div>
-                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (9).jpg"></div>
-                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (10).jpg"></div>
-                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (11).jpg"></div>
-                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (12).jpg"></div>
-                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (13).jpg"></div>
-                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (14).jpg"></div>
-                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (15).jpg"></div>
-                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (16).jpg"></div>
+                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (1).jpg" loading="lazy"></div>
+                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (2).jpg" loading="lazy"></div>
+                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (3).jpg" loading="lazy"></div>
+                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (4).jpg" loading="lazy"></div>
+                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (5).jpg" loading="lazy"></div>
+                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (6).jpg" loading="lazy"></div>
+                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (7).jpg" loading="lazy"></div>
+                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (8).jpg" loading="lazy"></div>
+                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (9).jpg" loading="lazy"></div>
+                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (10).jpg" loading="lazy"></div>
+                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (11).jpg" loading="lazy"></div>
+                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (12).jpg" loading="lazy"></div>
+                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (13).jpg" loading="lazy"></div>
+                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (14).jpg" loading="lazy"></div>
+                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (15).jpg" loading="lazy"></div>
+                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (16).jpg" loading="lazy"></div>
                     </div>
                 </div>
             </div>
@@ -716,7 +721,6 @@
         const cursor = document.getElementById('cursor');
         let mx = 0, my = 0, cx = 0, cy = 0;
         
-        // Alleen mousemove event als het geen touch device is
         if (window.matchMedia("(hover: hover)").matches) {
             document.addEventListener('mousemove', e => { 
                 mx = e.clientX; my = e.clientY; 
@@ -749,12 +753,18 @@
             const context = canvas.getContext("2d");
             const images = [];
             const state = { frame: 0 };
-            for (let i = 1; i <= frameCount; i++) {
-                const img = new Image();
-                img.onload = () => { if (i === 1) render(); };
-                img.src = framePath(i);
-                images.push(img);
-            }
+            
+            // Lazy load video frames om initiële laadtijd te verkorten
+            setTimeout(() => {
+                for (let i = 1; i <= frameCount; i++) {
+                    const img = new Image();
+                    img.fetchPriority = "low"; // Browser vertellen dit niet direct nodig is
+                    img.onload = () => { if (i === 1) render(); };
+                    img.src = framePath(i);
+                    images.push(img);
+                }
+            }, 1000);
+
             function render() {
                 const img = images[state.frame];
                 if (img && img.complete) {
@@ -834,7 +844,6 @@
                 if (item.dataset.sec === current) item.classList.add('active');
             });
 
-            // Video modelling
             const modSec = document.getElementById('scroll-modelling');
             const modFrac = (window.pageYOffset - modSec.offsetTop) / (modSec.offsetHeight - window.innerHeight);
             if(modFrac >= 0 && modFrac <= 1) {
@@ -842,7 +851,6 @@
                 requestAnimationFrame(modellingVid.render);
             }
 
-            // Video urban
             const urbanSec = document.getElementById('bsc');
             const urbanFrac = (window.pageYOffset - urbanSec.offsetTop) / (urbanSec.offsetHeight - window.innerHeight);
             if(urbanFrac >= 0 && urbanFrac <= 1) {
@@ -850,18 +858,15 @@
                 requestAnimationFrame(urbanVid.render);
             }
 
-            // GALLERY SCROLL (Snelheid geoptimaliseerd)
             const galSec = document.getElementById('gallery');
             const galTrack = document.getElementById('gallery-track');
             const galFrac = (window.pageYOffset - galSec.offsetTop) / (galSec.offsetHeight - window.innerHeight);
             if(galFrac >= 0 && galFrac <= 1) {
-                // We berekenen de verplaatsing op basis van de werkelijke hoogte van de track
                 const trackHeight = galTrack.scrollHeight;
                 const move = galFrac * (trackHeight - window.innerHeight + 100);
                 galTrack.style.transform = `translateY(-${move}px)`;
             }
 
-            // Horizontale scroll Ext
             const extSec = document.getElementById('sec-ext');
             const extTrack = extSec.querySelector('.horizontal-scroll-container');
             const extFrac = (window.pageYOffset - extSec.offsetTop) / (extSec.offsetHeight - window.innerHeight);
@@ -870,7 +875,6 @@
                 extTrack.style.transform = `translateX(-${move}px)`;
             }
 
-            // Horizontale scroll Int
             const intSec = document.getElementById('sec-int');
             const intTrack = document.getElementById('int-scroll-track');
             const intFrac = (window.pageYOffset - intSec.offsetTop) / (intSec.offsetHeight - window.innerHeight);
