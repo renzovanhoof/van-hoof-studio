@@ -3,392 +3,810 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>van Hoof Studio | 3D Visualisatie</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@200;400;600&display=swap" rel="stylesheet">
+    <title>VHS | Architecture</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --vhs-blue: #004aad;
-            --vhs-gold: #ffde59;
-            --vhs-white: #ffffff;
-            --vhs-grey: #f8f8f8;
-            --vhs-black: #0e0e0e;
-            --transition: all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+            --bg: #000000;
+            --accent: #ffff00;
+            --text: #ffffff;
+            --grey: #111;
         }
 
-        * { box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body { margin: 0; font-family: 'Montserrat', sans-serif; background: var(--vhs-white); color: var(--vhs-black); overflow-x: hidden; }
+        * { box-sizing: border-box; margin: 0; padding: 0; cursor: none !important; }
 
-        /* --- Header --- */
-        header {
-            background-color: var(--vhs-blue);
-            padding: 8px 8%;
-            display: flex; justify-content: space-between; align-items: center;
-            position: fixed; top: 0; width: 100%; z-index: 1000;
-            border-bottom: 2px solid var(--vhs-gold);
-            transition: var(--transition);
-            height: 80px;
-        }
-
-        header.scrolled {
-            background-color: rgba(0, 74, 173, 0.85);
-            backdrop-filter: blur(15px);
-            height: 70px;
-        }
-
-        .logo-container { display: flex; align-items: center; height: 100%; }
-        .logo-container img { height: 140%; width: auto; display: block; }
-
-        nav a { color: white; text-decoration: none; margin-left: 35px; font-weight: 600; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px; transition: 0.3s; }
-        nav a:hover { color: var(--vhs-gold); }
-
-        /* --- Hero Sectie met Verbeterde Animatie --- */
-        .hero {
-            height: 100vh; position: relative; overflow: hidden;
-            display: flex; align-items: center; justify-content: center;
-        }
-        
-        .hero-slide {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-size: cover; background-position: center;
-            opacity: 0; transition: opacity 1.5s ease-in-out; z-index: -2;
-            filter: grayscale(100%);
-            transform: scale(1);
-        }
-        
-        /* De 'active' class zorgt voor de fade-in en start de zoom */
-        .hero-slide.active { 
-            opacity: 1; 
-            animation: continuousZoom 12s linear forwards; 
-        }
-
-        /* Constante zoom zonder terugslag */
-        @keyframes continuousZoom { 
-            from { transform: scale(1); } 
-            to { transform: scale(1.15); } 
-        }
-
-        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); z-index: -1; }
-        
-        .hero-content { z-index: 10; width: 100%; max-width: 600px; padding: 0 20px; text-align: center; }
-        .hero-content img.center-logo {
-            width: 100%;
-            height: auto;
-            max-width: 450px;
-        }
-
-        /* --- Koppen Styling --- */
-        .section-header { text-align: center; margin-bottom: 60px; }
-        .section-header h2 { 
+        body {
             font-family: 'Montserrat', sans-serif;
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--vhs-blue); 
-            text-transform: uppercase;
-            letter-spacing: 5px;
-            margin: 0; 
+            background-color: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
         }
-        .line { width: 40px; height: 3px; background: var(--vhs-gold); margin: 15px auto; }
 
-        /* --- Over Mij Sectie --- */
-        .about-section { background: var(--vhs-grey); padding: 120px 8% 100px 8%; }
-        .about-container {
-            display: flex; align-items: center; gap: 60px; max-width: 1000px; margin: 0 auto;
-            background: white; padding: 50px; border-radius: 4px; box-shadow: 0 15px 40px rgba(0,0,0,0.04);
-            opacity: 0; transform: translateY(40px); transition: all 1.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+        #cursor {
+            position: fixed; width: 15px; height: 15px;
+            background: var(--accent); border-radius: 50%;
+            pointer-events: none; z-index: 99999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, background 0.3s, mix-blend-mode 0.3s;
         }
-        .about-container.visible { opacity: 1; transform: translateY(0); }
-        .about-image { flex: 0 0 280px; width: 280px; height: 280px; border-radius: 50%; overflow: hidden; border: 4px solid var(--vhs-gold); cursor: pointer; background: #eee; }
-        .about-image img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); transition: 0.8s; }
-        .about-image:hover img { filter: grayscale(0%); transform: scale(1.1); }
-        
-        .about-text h3 { 
-            font-family: 'Montserrat', sans-serif; 
-            font-size: 1.4rem; 
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--vhs-blue); 
-            margin-top: 0; 
-        }
-        .about-text p { line-height: 1.8; color: #444; }
 
-        /* --- Studio Sectie --- */
-        #studio { 
-            background: var(--vhs-white); 
-            padding: 140px 8% 120px 8%; 
+        #cursor.hover-active {
+            width: 50px;
+            height: 50px;
+            background: white;
+            mix-blend-mode: difference;
         }
-        .studio-grid { 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: 30px; 
-            max-width: 1400px; 
-            margin: 0 auto; 
-        }
-        .project-card { position: relative; height: 500px; overflow: hidden; cursor: pointer; background: var(--vhs-black); }
-        .project-card img { width: 100%; height: 100%; object-fit: cover; transition: all 1.2s ease; opacity: 0.8; }
-        .project-card:hover img { transform: scale(1.05); opacity: 0.5; }
-        .project-info { position: absolute; bottom: 0; left: 0; width: 100%; padding: 40px; color: white; transition: var(--transition); }
-        .project-info h3 { font-family: 'Playfair Display', serif; font-size: 1.8rem; margin: 0; color: var(--vhs-gold); }
 
-        /* --- Contact Sectie --- */
-        .contact-section { background: var(--vhs-grey); padding: 120px 8%; }
-        .contact-container { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
+        .nav-gradient-overlay {
+            position: fixed;
+            top: 0; right: 0;
+            width: 350px; height: 100vh;
+            background: linear-gradient(to right, transparent, rgba(0,0,0,0.9));
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        nav {
+            position: fixed; top: 0; width: 100%;
+            padding: 30px 50px; display: flex;
+            justify-content: space-between; align-items: center;
+            z-index: 1000; mix-blend-mode: difference;
+        }
         
-        .contact-info h3 { 
-            font-family: 'Montserrat', sans-serif; 
-            font-size: 1.4rem; 
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--vhs-blue); 
-            margin-top: 0; 
+        @media screen and (max-width: 768px) {
+            nav { padding: 20px 25px; }
+            #menu-toggle { right: 25px !important; top: 25px !important; }
+            #expanded-nav { 
+                right: 25px !important; 
+                top: 25px !important; 
+                height: auto !important; 
+                padding: 60px 20px 20px 20px !important; 
+                flex-direction: column;
+                align-items: flex-start !important;
+            }
+            #expanded-nav a { margin: 10px 0 !important; font-size: 0.8rem !important; }
         }
-        .contact-info p { line-height: 1.6; color: #555; }
+
+        .nav-logo img { 
+            height: 40px; 
+            filter: brightness(0) invert(1); 
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+        }
+        .nav-logo:hover img { transform: scale(1.35); }
+
+        #timeline-nav {
+            position: fixed; right: 50px; top: 50%;
+            transform: translateY(-50%);
+            display: flex; flex-direction: column;
+            align-items: flex-end; gap: 25px;
+            z-index: 1002;
+            transition: transform 0.5s cubic-bezier(0.7, 0, 0.3, 1), opacity 0.5s;
+        }
+        #timeline-nav.collapsed { transform: translateY(-50%) translateX(150px); opacity: 0; }
+
+        .timeline-item {
+            display: flex; align-items: center; gap: 15px;
+            text-decoration: none;
+        }
+        .timeline-label {
+            color: var(--text); font-size: 0.5rem; letter-spacing: 2px;
+            text-transform: uppercase; opacity: 0; transform: translateX(10px);
+            transition: 0.3s; pointer-events: none;
+        }
+        .timeline-dot {
+            width: 8px; height: 8px; border: 1px solid var(--accent);
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .timeline-item:hover .timeline-label { opacity: 1; transform: translateX(0); }
+        .timeline-item:hover .timeline-dot { background: var(--accent); transform: scale(1.5); }
+        .timeline-item.active .timeline-dot { background: var(--accent); height: 35px; }
+        .timeline-item.active .timeline-label { opacity: 0.6; color: var(--accent); }
+
+        #menu-toggle {
+            position: fixed; top: 35px; right: 50px;
+            width: 50px; height: 50px; background: var(--accent);
+            display: flex; align-items: center;
+            justify-content: center; z-index: 1001; 
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.3s;
+        }
+        #menu-toggle:hover { transform: scale(1.1) rotate(90deg); background: white; }
         
-        .contact-form input, .contact-form textarea {
-            width: 100%;
-            padding: 15px;
-            margin-bottom: 10px;
-            border: 1px solid #ddd;
-            outline: none;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 14px;
+        .menu-bars { width: 20px; height: 2px; background: black; position: relative; }
+        .menu-bars::before, .menu-bars::after { content: ''; position: absolute; width: 100%; height: 2px; background: black; }
+        .menu-bars::before { top: -6px; } .menu-bars::after { top: 6px; }
+
+        #expanded-nav {
+            position: fixed; top: 35px; right: 50px; height: 50px;
+            background: var(--accent);
+            display: flex; align-items: center; padding: 0 60px 0 30px;
+            transform: scaleX(0); transform-origin: right;
+            transition: 0.5s cubic-bezier(0.7, 0, 0.3, 1);
+            z-index: 1000; opacity: 0;
         }
-        .contact-form textarea {
-            height: 120px;
-            resize: none;
-            margin-bottom: 15px;
+        #expanded-nav.active { transform: scaleX(1); opacity: 1; }
+        #expanded-nav a {
+            color: black; text-decoration: none; font-size: 0.6rem;
+            letter-spacing: 2px; font-weight: 300; margin-right: 25px;
+            white-space: nowrap; text-transform: uppercase;
+            transition: transform 0.3s, letter-spacing 0.3s;
+            display: inline-block;
         }
-        ::placeholder {
-            color: #888;
-            font-size: 14px;
+        #expanded-nav a:hover { transform: scale(1.25); letter-spacing: 4px; font-weight: 400; }
+
+        .logo-marquee {
+            width: 100%; padding: 60px 0;
+            background: #000; overflow: hidden;
+            display: flex; border-top: 1px solid #222; border-bottom: 1px solid #222;
+        }
+        .marquee-track { display: flex; width: max-content; animation: scrollLogos 20s linear infinite; }
+        .marquee-track img {
+            height: 40px; margin: 0 60px; filter: brightness(0) invert(1);
+            opacity: 0.4; transition: all 0.4s ease;
+        }
+        .marquee-track img:hover {
             opacity: 1;
+            filter: brightness(0) saturate(100%) invert(91%) sepia(94%) saturate(5432%) hue-rotate(359deg) brightness(105%) contrast(106%) !important;
+            transform: scale(1.1);
         }
 
-        .btn-submit { 
-            background: var(--vhs-blue); 
-            color: white; 
-            border: 1px solid var(--vhs-blue); 
-            padding: 18px 50px; 
-            text-transform: uppercase; 
-            letter-spacing: 2px; 
-            cursor: pointer; 
-            font-weight: 600; 
-            font-size: 0.8rem;
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        @keyframes scrollLogos { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        .scroll-video-section {
+            height: 300vh;
             position: relative;
-            z-index: 1;
+            background: #000;
         }
-        .btn-submit:hover {
-            background: var(--vhs-gold);
-            color: var(--vhs-black);
-            border-color: var(--vhs-gold);
-            box-shadow: 0 5px 15px rgba(255, 222, 89, 0.3);
+        .video-canvas-container {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .video-canvas {
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+        }
+        .video-header-overlay {
+            position: absolute;
+            top: 10vh;
+            width: 100%;
+            text-align: center;
+            z-index: 10;
+            pointer-events: none;
         }
 
-        /* --- Footer --- */
-        footer { 
-            background: var(--vhs-blue); 
-            color: white; 
-            padding: 60px 8% 30px 8%; 
-            text-align: center; 
-            border-top: 4px solid var(--vhs-gold); 
+        /* --- UNIFORM SECTION HEADERS --- */
+        .section-header { text-align: center; margin-bottom: 60px; }
+        .section-header .top-label { font-size: 0.6rem; letter-spacing: 4px; opacity: 0.5; margin-bottom: 10px; color: var(--text); text-transform: uppercase; display: block; }
+        .section-header .main-title { font-size: 0.8rem; letter-spacing: 12px; color: var(--accent); font-weight: 300; text-transform: uppercase; display: block; }
+
+        /* --- BSC SUBPAGES --- */
+        .bsc-subpage {
+            padding: 100px 10vw;
+            background: #000;
+            border-top: 1px solid #222;
+            text-align: center;
         }
-        .footer-logo img { height: 80px; width: auto; margin-bottom: 20px; }
-        .footer-copyright { 
-            margin-top: 40px; 
-            font-size: 0.75rem; 
-            opacity: 0.7; 
-            letter-spacing: 1px;
-            text-transform: uppercase;
+        .bsc-subpage-img {
+            width: 100%;
+            max-width: 1200px;
+            height: auto;
+            margin: 0 auto;
+            filter: grayscale(1);
+            transition: filter 0.8s ease, transform 0.8s ease;
+        }
+        .bsc-subpage-img:hover {
+            filter: grayscale(0);
+            transform: scale(1.02);
         }
 
-        /* --- Lightbox --- */
-        #lightbox {
-            position: fixed; z-index: 2000; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.98); display: none; justify-content: center; align-items: center;
+        /* --- GRADUATION RESEARCH SECTION --- */
+        #graduation-research {
+            padding: 150px 10vw;
+            background: #000;
+            border-top: 1px solid #222;
         }
-        #lightbox-img { max-width: 90%; max-height: 85%; border: 1px solid var(--vhs-gold); }
-        .close-btn, .nav-btn { position: absolute; color: white; cursor: pointer; font-size: 40px; user-select: none; }
-        .close-btn { top: 20px; right: 40px; }
-        .prev { left: 20px; } .next { right: 20px; }
+        .research-header { margin-bottom: 100px; text-align: center; }
+        .research-header h3 { font-size: clamp(1.5rem, 4vw, 3.5rem); color: var(--text); font-weight: 900; line-height: 1.1; max-width: 900px; margin: 0 auto; }
+        .research-header h3 span { color: var(--accent); } 
+        
+        .research-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 40px;
+            margin-top: 80px;
+        }
+        .research-row {
+            grid-column: span 12;
+            display: grid;
+            grid-template-columns: inherit;
+            gap: inherit;
+            margin-bottom: 120px;
+        }
+        .research-text {
+            grid-column: span 7;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            font-weight: 300;
+            opacity: 0.8;
+            align-self: center;
+        }
+        .research-text.right { grid-column: 6 / span 7; text-align: right; }
+        .research-text strong { color: var(--accent); font-weight: 400; }
+        
+        .research-stats {
+            grid-column: span 4;
+            border-left: 1px solid var(--accent);
+            padding-left: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .research-stats.left { grid-column: 1 / span 4; border-left: none; border-right: 1px solid var(--accent); padding-left: 0; padding-right: 30px; text-align: right; }
+        
+        .stat-item { margin-bottom: 30px; }
+        .stat-value { font-size: 3rem; font-weight: 900; color: var(--accent); display: block; }
+        .stat-label { font-size: 0.6rem; letter-spacing: 2px; opacity: 0.5; text-transform: uppercase; }
 
-        @media (max-width: 900px) {
-            .studio-grid { grid-template-columns: 1fr; }
-            .about-container { flex-direction: column; text-align: center; }
-            .contact-container { grid-template-columns: 1fr; gap: 40px; }
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 1s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        @media screen and (max-width: 768px) {
+            .research-text, .research-stats { grid-column: span 12 !important; text-align: left !important; border: none !important; padding: 0 !important; }
+            .research-row { margin-bottom: 60px; display: flex; flex-direction: column; }
+            .research-row .research-text { order: 1; }
+            .research-row .research-stats { order: 2; margin-top: 20px; }
         }
+
+        /* --- GALLERY SECTION --- */
+        #gallery {
+            height: 1200vh; 
+            position: relative;
+            background: #050505;
+        }
+        .gallery-sticky {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+        }
+        .gallery-track-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding-top: 25vh; 
+        }
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10vh 10vw;
+            width: 65%;
+            will-change: transform;
+        }
+        .gallery-item {
+            width: 100%;
+            aspect-ratio: 2/3;
+            overflow: hidden;
+            background: #111;
+            filter: grayscale(1);
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), filter 0.6s ease;
+        }
+        .gallery-item:nth-child(even) { transform: translateY(50%); }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }
+        .gallery-item:hover { filter: grayscale(0); z-index: 10; }
+        .gallery-item:hover img { transform: scale(1.1); }
+
+        /* --- CONTACT SECTIE --- */
+        #contact {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 100px 50px 50px 50px;
+            background: #050505;
+            text-align: center;
+        }
+        .contact-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .contact-trigger {
+            font-size: clamp(3rem, 10vw, 7rem); color: var(--accent);
+            text-decoration: none; font-weight: 900; display: block;
+            margin: 30px 0; transition: transform 0.4s;
+        }
+        .contact-trigger:hover { transform: skewX(-10deg) scale(1.05); color: white; }
+
+        .footer-bottom { width: 100%; padding-top: 50px; }
+
+        #back-to-top {
+            position: fixed; bottom: 30px; right: 30px;
+            width: 50px; height: 50px; background: var(--accent); 
+            display: flex; align-items: center; justify-content: center;
+            z-index: 999; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            opacity: 0; visibility: hidden;
+            border: none;
+        }
+        #back-to-top.show { opacity: 1; visibility: visible; }
+        #back-to-top::after { content: '↑'; color: black; font-size: 1.2rem; font-weight: bold; }
+        #back-to-top:hover { transform: scale(1.1) rotate(90deg); background: white; }
+
+        #transition-overlay {
+            position: fixed; inset: 0; background: var(--accent);
+            z-index: 10001; transform: translateY(100%);
+            pointer-events: none;
+        }
+
+        .hero {
+            height: 100vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
+        }
+        .hero img { 
+            width: 300px; margin-bottom: 20px; filter: brightness(0) invert(1); 
+            animation: float 6s infinite ease-in-out;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .hero img:hover { 
+            transform: scale(1.15); 
+            filter: brightness(0) saturate(100%) invert(91%) sepia(94%) saturate(5432%) hue-rotate(359deg) brightness(105%) contrast(106%) !important;
+        }
+
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+
+        .category-section { position: relative; }
+        #sec-ext { height: 400vh; } 
+        #sec-int { height: 700vh; } 
+
+        .sticky-wrapper {
+            position: sticky; top: 0; height: 100vh;
+            display: flex; flex-direction: column; justify-content: center;
+            overflow: hidden; border-top: 1px solid #222;
+        }
+        .category-header { width: 100%; text-align: center; margin-bottom: 40px; }
+        .category-header .top-label { font-size: 0.6rem; letter-spacing: 4px; opacity: 0.5; margin-bottom: 10px; color: var(--text); text-transform: uppercase; display: block; }
+        .category-header .main-title { font-size: 0.8rem; letter-spacing: 12px; color: var(--accent); font-weight: 300; text-transform: uppercase; display: block; }
+
+        .horizontal-scroll-container { display: flex; padding: 0 10vw; gap: 5vw; will-change: transform; }
+
+        .project-card {
+            min-width: 650px; height: 450px; flex-shrink: 0;
+            position: relative; overflow: hidden; background: var(--grey);
+        }
+        .project-card img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1); transition: 0.8s ease; }
+        .project-card:hover img { filter: grayscale(0); transform: scale(1.05); }
+        .project-info { position: absolute; bottom: 20px; left: 20px; opacity: 0; transition: 0.4s; }
+        .project-card:hover .project-info { opacity: 1; }
+        .project-info h4 { font-size: 0.6rem; letter-spacing: 2px; background: var(--accent); color: black; padding: 5px 15px; font-weight: 300; }
+
+        .footer-socials { display: flex; justify-content: center; gap: 25px; margin-top: 40px; }
+        .footer-socials a { 
+            color: var(--text) !important; text-decoration: none; font-size: 0.6rem; 
+            letter-spacing: 3px; text-transform: uppercase; opacity: 0.6; transition: 0.3s;
+        }
+        .footer-socials a:hover { opacity: 1; color: var(--accent) !important; }
+        
+        .footer-legal { margin-top: 50px; font-size: 0.6rem; opacity: 0.4; letter-spacing: 2px; font-weight: 300; }
     </style>
 </head>
 <body>
 
-    <header id="mainHeader">
-        <a href="#" class="logo-container"><img src="afbeeldingen/logo/4.png" alt="Logo"></a>
-        <nav>
-            <a href="#about">Over Mij</a>
-            <a href="#studio">Studio</a>
-            <a href="#contact">Contact</a>
-        </nav>
-    </header>
+    <div id="cursor"></div>
+    <div id="transition-overlay"></div>
+    <div class="nav-gradient-overlay"></div>
 
-    <section class="hero" id="heroSection">
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <img src="afbeeldingen/logo/6.png" alt="Van Hoof Studio" class="center-logo">
-        </div>
-    </section>
+    <nav>
+        <a href="javascript:void(0)" onclick="smartPage('home')" class="nav-logo">
+            <img src="afbeeldingen/logo/4.png" alt="Logo">
+        </a>
+    </nav>
 
-    <section id="about" class="about-section">
-        <div class="section-header">
-            <h2>Over Mij</h2>
-            <div class="line"></div>
-        </div>
-        <div class="about-container" id="aboutBox">
-            <div class="about-image">
-                <img src="afbeeldingen/logo/5.png" alt="Portret">
-            </div>
-            <div class="about-text">
-                <h3>Passie voor perfectie</h3>
-                <p>Achter Van Hoof Studio sta ik: een gedreven 3D-visualisator met een scherp oog voor detail. Ik help ontwerpen tastbaar te maken nog voordat de eerste steen is gelegd.</p>
-                <p>Met oog voor sfeer en architectonische precisie vertaal ik visies naar beelden die overtuigen.</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="studio">
-        <div class="section-header">
-            <h2>Studio</h2>
-            <div class="line"></div>
-        </div>
-        <div class="studio-grid">
-            <div class="project-card" onclick="openLightbox('exterieur')">
-                <img src="afbeeldingen/ext/1.1.jpg" alt="Exterieur">
-                <div class="project-info"><h3>Exterieur</h3></div>
-            </div>
-            <div class="project-card" onclick="openLightbox('tuin')">
-                <img src="afbeeldingen/ext/2.1.jpg" alt="Tuinontwerp">
-                <div class="project-info"><h3>Tuinontwerp</h3></div>
-            </div>
-            <div class="project-card" onclick="openLightbox('interieur')">
-                <img src="afbeeldingen/int/1.1.png" alt="Interieur">
-                <div class="project-info"><h3>Interieur</h3></div>
-            </div>
-            <div class="project-card" onclick="openLightbox('multi')">
-                <img src="afbeeldingen/int/3.1.png" alt="Multifunctionele ruimtes">
-                <div class="project-info"><h3>Multifunctionele ruimtes</h3></div>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" class="contact-section">
-        <div class="section-header">
-            <h2>Contact</h2>
-            <div class="line"></div>
-        </div>
-        <div class="contact-container">
-            <div class="contact-info">
-                <h3>Samenwerken?</h3>
-                <p>Laten we samen iets bijzonders creëren. Heb je een project dat een visuele vertaalslag nodig heeft of ben je benieuwd wat ik voor jouw ontwerp kan betekenen? <br><br>Stuur een berichtje en ik neem zo snel mogelijk contact met je op.</p>
-                <p><strong>Email:</strong> info@vanhoofstudio.nl</p>
-            </div>
-            <form class="contact-form">
-                <input type="text" placeholder="Naam">
-                <input type="email" placeholder="E-mail">
-                <textarea placeholder="Je bericht"></textarea>
-                <button type="submit" class="btn-submit">Bericht versturen</button>
-            </form>
-        </div>
-    </section>
-
-    <div id="lightbox">
-        <span class="close-btn" onclick="closeLightbox()">&times;</span>
-        <span class="nav-btn prev" onclick="changeImg(-1)">&#10094;</span>
-        <img id="lightbox-img" src="">
-        <span class="nav-btn next" onclick="changeImg(1)">&#10095;</span>
+    <div id="timeline-nav">
+        <a href="javascript:void(0)" onclick="smartPage('sec-ext')" class="timeline-item" data-sec="sec-freelance">
+            <span class="timeline-label">Freelance</span><div class="timeline-dot"></div>
+        </a>
+        <a href="javascript:void(0)" onclick="smartPage('technical-detailing')" class="timeline-item" data-sec="bsc">
+            <span class="timeline-label">BSc</span><div class="timeline-dot"></div>
+        </a>
+        <a href="javascript:void(0)" onclick="smartPage('msc')" class="timeline-item" data-sec="msc">
+            <span class="timeline-label">MSc</span><div class="timeline-dot"></div>
+        </a>
+        <a href="javascript:void(0)" onclick="smartPage('gallery')" class="timeline-item" data-sec="gallery">
+            <span class="timeline-label">Gallery</span><div class="timeline-dot"></div>
+        </a>
+        <a href="javascript:void(0)" onclick="smartPage('contact')" class="timeline-item" data-sec="contact">
+            <span class="timeline-label">Contact</span><div class="timeline-dot"></div>
+        </a>
     </div>
 
-    <footer>
-        <div class="footer-content">
-            <div class="footer-logo">
-                <img src="afbeeldingen/logo/4.png" alt="Van Hoof Studio Logo">
-            </div>
-            <p>Architectonische 3D Visualisaties</p>
-            <div class="footer-copyright">
-                &copy; 2026 Van Hoof Studio | Alle rechten voorbehouden
+    <div id="menu-toggle" onclick="toggleMenu()"><div class="menu-bars"></div></div>
+    
+    <div id="expanded-nav">
+        <a href="javascript:void(0)" onclick="smartPage('sec-ext'); toggleMenu()">Freelance</a>
+        <a href="javascript:void(0)" onclick="smartPage('technical-detailing'); toggleMenu()">BSc</a>
+        <a href="javascript:void(0)" onclick="smartPage('msc'); toggleMenu()">MSc</a>
+        <a href="javascript:void(0)" onclick="smartPage('gallery'); toggleMenu()">Gallery</a>
+        <a href="javascript:void(0)" onclick="smartPage('contact'); toggleMenu()">Contact</a>
+    </div>
+
+    <div id="back-to-top" onclick="smartPage('home')"></div>
+
+    <div id="main-content">
+        <section class="hero" id="home">
+            <img src="afbeeldingen/logo/4.png" alt="Logo">
+            <h1 style="font-size: 0.7rem; letter-spacing: 12px; font-weight: 300; opacity: 0.7;">EXPERIENCE ARCHITECTURE</h1>
+        </section>
+
+        <div class="logo-marquee">
+            <div class="marquee-track">
+                <img src="afbeeldingen/branch/1.png"><img src="afbeeldingen/branch/2.png">
+                <img src="afbeeldingen/branch/3.png"><img src="afbeeldingen/branch/4.png">
+                <img src="afbeeldingen/branch/5.png"><img src="afbeeldingen/branch/6.png">
+                <img src="afbeeldingen/branch/7.png">
+                <img src="afbeeldingen/branch/1.png"><img src="afbeeldingen/branch/2.png">
+                <img src="afbeeldingen/branch/3.png"><img src="afbeeldingen/branch/4.png">
+                <img src="afbeeldingen/branch/5.png"><img src="afbeeldingen/branch/6.png">
+                <img src="afbeeldingen/branch/7.png">
             </div>
         </div>
-    </footer>
+
+        <section class="category-section" id="sec-ext">
+            <div class="sticky-wrapper">
+                <div class="category-header">
+                    <span class="top-label">FREELANCE</span>
+                    <span class="main-title">EXTERIEUR</span>
+                </div>
+                <div class="horizontal-scroll-container">
+                    <div class="project-card"><img src="afbeeldingen/ext/1.1.jpg"><div class="project-info"><h4>PROJECT 1.1</h4></div></div>
+                    <div class="project-card"><img src="afbeeldingen/ext/1.2.jpg"><div class="project-info"><h4>PROJECT 1.2</h4></div></div>
+                    <div class="project-card"><img src="afbeeldingen/ext/1.3.jpg"><div class="project-info"><h4>PROJECT 1.3</h4></div></div>
+                    <div class="project-card"><img src="afbeeldingen/ext/2.1.jpg"><div class="project-info"><h4>PROJECT 2.1</h4></div></div>
+                    <div class="project-card"><img src="afbeeldingen/ext/2.2.jpg"><div class="project-info"><h4>PROJECT 2.2</h4></div></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="scroll-video-section" id="scroll-modelling">
+            <div class="video-canvas-container">
+                <div class="video-header-overlay">
+                    <div class="section-header">
+                        <span class="top-label">FREELANCE</span>
+                        <span class="main-title">MODELLING</span>
+                    </div>
+                </div>
+                <canvas id="canvas-modelling" class="video-canvas"></canvas>
+            </div>
+        </section>
+
+        <section class="category-section" id="sec-int">
+            <div class="sticky-wrapper">
+                <div class="category-header">
+                    <span class="top-label">FREELANCE</span>
+                    <span class="main-title">INTERIEUR</span>
+                </div>
+                <div class="horizontal-scroll-container" data-direction="rtl" id="int-scroll-track">
+                    <div class="project-card"><img src="afbeeldingen/int/1.1.png"><div class="project-info"><h4>PROJECT 1.1</h4></div></div>
+                    <div class="project-card"><img src="afbeeldingen/int/1.2.png"><div class="project-info"><h4>PROJECT 1.2</h4></div></div>
+                    <div class="project-card"><img src="afbeeldingen/int/1.3.png"><div class="project-info"><h4>PROJECT 1.3</h4></div></div>
+                    <div class="project-card"><img src="afbeeldingen/int/2.1.jpg"><div class="project-info"><h4>PROJECT 2.1</h4></div></div>
+                    <div class="project-card"><img src="afbeeldingen/int/2.2.jpg"><div class="project-info"><h4>PROJECT 2.2</h4></div></div>
+                    <div class="project-card"><img src="afbeeldingen/int/2.3.jpg"><div class="project-info"><h4>PROJECT 2.3</h4></div></div>
+                    <div class="project-card"><img src="afbeeldingen/int/3.1.png"><div class="project-info"><h4>PROJECT 3.1</h4></div></div>
+                    <div class="project-card"><img src="afbeeldingen/int/3.2.png"><div class="project-info"><h4>PROJECT 3.2</h4></div></div>
+                    <div class="project-card"><img src="afbeeldingen/int/3.4.png"><div class="project-info"><h4>PROJECT 3.4</h4></div></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="bsc-subpage" id="technical-detailing">
+            <div class="reveal">
+                <div class="section-header">
+                    <span class="top-label">BSc</span>
+                    <span class="main-title">Architectural Sheet</span>
+                </div>
+                <img src="afbeeldingen/bsc_b/1.png" class="bsc-subpage-img" alt="Architectural Sheet">
+            </div>
+        </section>
+
+        <section class="bsc-subpage" id="architectural-construction">
+            <div class="reveal">
+                <div class="section-header">
+                    <span class="top-label">BSc</span>
+                    <span class="main-title">Construction Details</span>
+                </div>
+                <img src="afbeeldingen/bsc_b/2.png" class="bsc-subpage-img" alt="Construction Details">
+            </div>
+        </section>
+
+        <section id="graduation-research">
+            <div class="research-header reveal">
+                <div class="section-header">
+                    <span class="top-label">BSc</span>
+                    <span class="main-title">Onderzoek</span>
+                </div>
+                <h3>De transitie naar <span>Paris Proof</span>: Grip op <span>materiaalgebonden emissies</span> in de <span>ontwerpfase</span></h3>
+            </div>
+
+            <div class="research-grid">
+                <div class="research-row">
+                    <div class="research-text reveal">
+                        De bouwsector bevindt zich in een fundamentele transitie. Waar de focus jarenlang lag op het energieverbruik van gebouwen tijdens de gebruiksfase, verschuift de urgentie nu naar de <strong>‘embodied carbon’</strong>: de CO₂-emissies die vrijkomen bij de productie, het transport en de verwerking van bouwmaterialen.
+                    </div>
+                    <div class="research-stats reveal">
+                        <div class="stat-item">
+                            <span class="stat-value">PARIS</span>
+                            <span class="stat-label">PROOF TARGET</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="research-row">
+                    <div class="research-stats left reveal">
+                        <div class="stat-item">
+                            <span class="stat-value">95%</span>
+                            <span class="stat-label">IMPACT HOTSPOTS</span>
+                        </div>
+                    </div>
+                    <div class="research-text right reveal">
+                        Het halen van de doelstellingen uit het Akkoord van Parijs vraagt om een strengere aanpak dan de huidige wettelijke kaders voorschrijven. Uit mijn onderzoek naar de utiliteitsbouw blijkt dat projecten vaak nog ver boven de noodzakelijke <strong>'Paris Proof-grenswaarden'</strong> liggen. Om deze kloof te dichten, heb ik onderzocht hoe we tijdens het ontwerpproces proactief kunnen sturen op CO₂-reductie.
+                    </div>
+                </div>
+
+                <div class="research-row">
+                    <div class="research-text reveal">
+                        Maar liefst <strong>95%</strong> van de materiaalgebonden emissies is direct terug te voeren op de keuzes binnen de draagconstructie en de gebouwschil. Door de transitie te maken naar hybride concepten en biobased materialen (zoals kruislaaghout), bleek een reductie van de CO₂-uitstoot van bijna <strong>zestig procent</strong> haalbaar ten opzichte van de huidige standaarden.
+                    </div>
+                    <div class="research-stats reveal">
+                        <div class="stat-item">
+                            <span class="stat-value">60%</span>
+                            <span class="stat-label">CO₂ REDUCTIE</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="research-row" style="border-bottom: 1px solid #222; margin-bottom: 0; padding-bottom: 120px;">
+                    <div class="research-text reveal" style="grid-column: span 12; text-align: center; border-top: none; padding-top: 80px;">
+                        <h4 style="color: var(--accent); letter-spacing: 5px; margin-bottom: 20px;">VAN BEREKENEN NAAR ONTWERPEN</h4>
+                        Effectieve sturing vindt uitsluitend plaats wanneer duurzaamheidsparameters al in de <strong>vroege schetsfases</strong> worden geïntegreerd. Dit onderzoek vormt de basis voor een methodiek waarbij data en ontwerp hand in hand gaan om de klimaatdoelstellingen van morgen vandaag al te realiseren.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="bsc">
+            <div class="scroll-video-section" id="scroll-urban" style="margin-top: 50px;">
+                <div class="video-canvas-container">
+                    <div class="video-header-overlay">
+                        <div class="section-header">
+                            <span class="top-label">BSc</span>
+                            <span class="main-title">URBAN DESIGN</span>
+                        </div>
+                    </div>
+                    <canvas id="canvas-urban" class="video-canvas"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section class="hero" id="msc" style="border-top: 1px solid #222;">
+            <div class="section-header">
+                <span class="main-title">MSC ACADEMIC</span>
+            </div>
+        </section>
+
+        <section id="gallery">
+            <div class="gallery-sticky">
+                <div class="video-header-overlay" style="top: 10vh;">
+                    <div class="section-header">
+                        <span class="top-label">NEW YORK</span>
+                        <span class="main-title">GALLERY</span>
+                    </div>
+                </div>
+                <div class="gallery-track-container">
+                    <div class="gallery-container" id="gallery-track">
+                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (1).jpg"></div>
+                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (2).jpg"></div>
+                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (3).jpg"></div>
+                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (4).jpg"></div>
+                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (5).jpg"></div>
+                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (6).jpg"></div>
+                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (7).jpg"></div>
+                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (8).jpg"></div>
+                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (9).jpg"></div>
+                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (10).jpg"></div>
+                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (11).jpg"></div>
+                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (12).jpg"></div>
+                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (13).jpg"></div>
+                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (14).jpg"></div>
+                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (15).jpg"></div>
+                        <div class="gallery-item"><img src="afbeeldingen/gallery/ny/ny (16).jpg"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer id="contact">
+            <div class="contact-content">
+                <p style="letter-spacing: 5px; opacity: 0.5; margin-bottom: 10px; font-weight: 300;">READY FOR IMPACT?</p>
+                <a href="mailto:info@vanhoofstudio.nl" class="contact-trigger">LET'S CONNECT</a>
+                <div class="footer-socials">
+                    <a href="#" target="_blank">LinkedIn</a>
+                    <a href="#" target="_blank">Instagram</a>
+                    <a href="#" target="_blank">WhatsApp</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-legal">
+                    <p style="margin-bottom: 5px; color: var(--accent); opacity: 1;">KVK: 12345678</p>
+                    <p>© 2026 VAN HOOF STUDIO</p>
+                </div>
+            </div>
+        </footer>
+    </div>
 
     <script>
-        const database = {
-            'exterieur': ['afbeeldingen/ext/1.1.jpg', 'afbeeldingen/ext/1.2.jpg', 'afbeeldingen/ext/1.3.jpg', 'afbeeldingen/ext/1.4.jpg'],
-            'tuin': ['afbeeldingen/ext/2.1.jpg', 'afbeeldingen/ext/2.3.jpg', 'afbeeldingen/ext/2.2.jpg'],
-            'interieur': ['afbeeldingen/int/1.1.png', 'afbeeldingen/int/1.2.png', 'afbeeldingen/int/1.3.png', 'afbeeldingen/int/2.1.jpg', 'afbeeldingen/int/2.2.jpg', 'afbeeldingen/int/2.3.jpg'],
-            'multi': ['afbeeldingen/int/3.1.png', 'afbeeldingen/int/3.2.png', 'afbeeldingen/int/3.4.png', 'afbeeldingen/int/3.3.png']
-        };
+        const cursor = document.getElementById('cursor');
+        let mx = 0, my = 0, cx = 0, cy = 0;
+        document.addEventListener('mousemove', e => { 
+            mx = e.clientX; my = e.clientY; 
+            const target = e.target;
+            if (target.closest('a') || target.closest('button') || target.closest('.project-card') || target.closest('#menu-toggle') || target.closest('.bsc-subpage-img')) {
+                cursor.classList.add('hover-active');
+            } else { cursor.classList.remove('hover-active'); }
+        });
 
-        function initHeroSlides() {
-            const hero = document.getElementById('heroSection');
-            let allImages = [...new Set(Object.values(database).flat())];
-            
-            allImages.forEach((imgUrl, index) => {
-                const slide = document.createElement('div');
-                slide.className = 'hero-slide';
-                if (index === 0) slide.classList.add('active');
-                slide.style.backgroundImage = `url('${imgUrl}')`;
-                hero.appendChild(slide);
-            });
+        function tick() {
+            cx += (mx - cx) * 0.1; cy += (my - cy) * 0.1;
+            cursor.style.left = cx + 'px'; cursor.style.top = cy + 'px';
+            requestAnimationFrame(tick);
+        }
+        tick();
 
-            let currentSlide = 0;
-            const slides = document.querySelectorAll('.hero-slide');
-            
-            if(slides.length > 0) {
-                setInterval(() => {
-                    // Verwijder active class van huidige slide
-                    slides[currentSlide].classList.remove('active');
-                    
-                    // Ga naar volgende slide
-                    currentSlide = (currentSlide + 1) % slides.length;
-                    
-                    // Voeg active toe aan nieuwe slide (start direct met inzoomen door de CSS animatie)
-                    slides[currentSlide].classList.add('active');
-                }, 6000); // Tijd tussen foto's
+        function initRTL() {
+            const intTrack = document.getElementById('int-scroll-track');
+            if(intTrack) {
+                const maxScroll = intTrack.scrollWidth - window.innerWidth + (window.innerWidth * 0.1);
+                intTrack.style.transform = `translateX(-${maxScroll}px)`;
             }
         }
+        window.addEventListener('load', initRTL);
+        window.addEventListener('resize', initRTL);
 
-        const observer = new IntersectionObserver((entries) => {
+        function setupVideoScroll(canvasId, framePath, frameCount) {
+            const canvas = document.getElementById(canvasId);
+            const context = canvas.getContext("2d");
+            const images = [];
+            const state = { frame: 0 };
+            for (let i = 1; i <= frameCount; i++) {
+                const img = new Image();
+                img.onload = () => { if (i === 1) render(); };
+                img.src = framePath(i);
+                images.push(img);
+            }
+            function render() {
+                const img = images[state.frame];
+                if (img && img.complete) {
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+                    const hRatio = canvas.width / img.width;
+                    const vRatio = canvas.height / img.height;
+                    const ratio = Math.max(hRatio, vRatio);
+                    const cx = (canvas.width - img.width * ratio) / 2;
+                    const cy = (canvas.height - img.height * ratio) / 2;
+                    context.clearRect(0, 0, canvas.width, canvas.height);
+                    context.drawImage(img, 0, 0, img.width, img.height, cx, cy, img.width * ratio, img.height * ratio);
+                }
+            }
+            return { state, render, frameCount };
+        }
+
+        const modellingVid = setupVideoScroll("canvas-modelling", i => `afbeeldingen/freelance_vid_1/ezgif-frame-${i.toString().padStart(3, '0')}.jpg`, 210);
+        const urbanVid = setupVideoScroll("canvas-urban", i => `afbeeldingen/bsc_urban_1/ezgif-frame-${i.toString().padStart(3, '0')}.jpg`, 240);
+
+        function toggleMenu() { 
+            const nav = document.getElementById('expanded-nav');
+            const timeline = document.getElementById('timeline-nav');
+            nav.classList.toggle('active');
+            if(nav.classList.contains('active')) timeline.classList.add('collapsed');
+            else timeline.classList.remove('collapsed');
+        }
+
+        function smartPage(target) {
+            const overlay = document.getElementById('transition-overlay');
+            overlay.style.transition = "transform 0.8s cubic-bezier(0.7, 0, 0.3, 1)";
+            overlay.style.transform = "translateY(0%)";
+            setTimeout(() => {
+                const el = document.getElementById(target);
+                window.scrollTo({top: el ? el.offsetTop : 0, behavior: 'instant'});
+                overlay.style.transform = "translateY(-100%)";
+                setTimeout(() => { overlay.style.transition = "none"; overlay.style.transform = "translateY(100%)"; }, 800);
+            }, 800);
+        }
+
+        const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('visible');
+                if (entry.isIntersecting) entry.target.classList.add('active');
             });
         }, { threshold: 0.1 });
 
-        document.addEventListener('DOMContentLoaded', () => {
-            initHeroSlides();
-            const aboutBox = document.getElementById('aboutBox');
-            if(aboutBox) observer.observe(aboutBox);
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+        window.addEventListener('scroll', () => {
+            const btt = document.getElementById('back-to-top');
+            if(window.pageYOffset > 500) btt.classList.add('show'); else btt.classList.remove('show');
+
+            let current = "";
+            const sections = [
+                { id: 'sec-ext', tag: 'sec-freelance' },
+                { id: 'scroll-modelling', tag: 'sec-freelance' },
+                { id: 'sec-int', tag: 'sec-freelance' },
+                { id: 'technical-detailing', tag: 'bsc' },
+                { id: 'architectural-construction', tag: 'bsc' },
+                { id: 'graduation-research', tag: 'bsc' },
+                { id: 'bsc', tag: 'bsc' },
+                { id: 'msc', tag: 'msc' },
+                { id: 'gallery', tag: 'gallery' },
+                { id: 'contact', tag: 'contact' }
+            ];
+
+            sections.forEach(s => {
+                const el = document.getElementById(s.id);
+                if (el && window.pageYOffset >= el.offsetTop - window.innerHeight/2) current = s.tag;
+            });
+
+            document.querySelectorAll('.timeline-item').forEach(item => {
+                item.classList.remove('active');
+                if (item.dataset.sec === current) item.classList.add('active');
+            });
+
+            const modSec = document.getElementById('scroll-modelling');
+            const modFrac = (window.pageYOffset - modSec.offsetTop) / (modSec.offsetHeight - window.innerHeight);
+            if(modFrac >= 0 && modFrac <= 1) {
+                modellingVid.state.frame = Math.min(modellingVid.frameCount - 1, Math.floor(modFrac * modellingVid.frameCount));
+                requestAnimationFrame(modellingVid.render);
+            }
+
+            const urbanSec = document.getElementById('bsc');
+            const urbanFrac = (window.pageYOffset - urbanSec.offsetTop) / (urbanSec.offsetHeight - window.innerHeight);
+            if(urbanFrac >= 0 && urbanFrac <= 1) {
+                urbanVid.state.frame = Math.min(urbanVid.frameCount - 1, Math.floor(urbanFrac * urbanVid.frameCount));
+                requestAnimationFrame(urbanVid.render);
+            }
+
+            const galSec = document.getElementById('gallery');
+            const galTrack = document.getElementById('gallery-track');
+            const galFrac = (window.pageYOffset - galSec.offsetTop) / (galSec.offsetHeight - window.innerHeight);
+            if(galFrac >= 0 && galFrac <= 1) {
+                const move = galFrac * (galTrack.offsetHeight - window.innerHeight + (window.innerHeight * 0.5));
+                galTrack.style.transform = `translateY(-${move}px)`;
+            }
+
+            const extSec = document.getElementById('sec-ext');
+            const extTrack = extSec.querySelector('.horizontal-scroll-container');
+            const extFrac = (window.pageYOffset - extSec.offsetTop) / (extSec.offsetHeight - window.innerHeight);
+            if(extFrac >= 0 && extFrac <= 1) {
+                const move = extFrac * (extTrack.scrollWidth - window.innerWidth + (window.innerWidth * 0.2));
+                extTrack.style.transform = `translateX(-${move}px)`;
+            }
+
+            const intSec = document.getElementById('sec-int');
+            const intTrack = document.getElementById('int-scroll-track');
+            const intFrac = (window.pageYOffset - intSec.offsetTop) / (intSec.offsetHeight - window.innerHeight);
+            if(intFrac >= 0 && intFrac <= 1) {
+                const maxScroll = intTrack.scrollWidth - window.innerWidth + (window.innerWidth * 0.1);
+                const move = maxScroll - (intFrac * maxScroll);
+                intTrack.style.transform = `translateX(-${move}px)`;
+            }
         });
-
-        window.onscroll = () => {
-            const header = document.getElementById('mainHeader');
-            window.pageYOffset > 50 ? header.classList.add('scrolled') : header.classList.remove('scrolled');
-        };
-
-        let currentList = []; let currentIndex = 0;
-        function openLightbox(id) {
-            currentList = database[id]; currentIndex = 0;
-            document.getElementById('lightbox-img').src = currentList[0];
-            document.getElementById('lightbox').style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-        function closeLightbox() { 
-            document.getElementById('lightbox').style.display = 'none'; 
-            document.body.style.overflow = 'auto';
-        }
-        function changeImg(n) {
-            currentIndex = (currentIndex + n + currentList.length) % currentList.length;
-            document.getElementById('lightbox-img').src = currentList[currentIndex];
-        }
     </script>
 </body>
 </html>
