@@ -410,22 +410,32 @@
             display: flex; flex-direction: column; justify-content: center;
             overflow: hidden; border-top: 1px solid #222;
         }
-        .category-header { width: 100%; text-align: center; margin-bottom: 20px; }
-        @media screen and (min-width: 768px) { .category-header { margin-bottom: 40px; } }
 
-        .category-header .top-label { font-size: 0.5rem; letter-spacing: 3px; opacity: 0.5; margin-bottom: 8px; color: var(--text); text-transform: uppercase; display: block; }
+        /* VERBETERDE TITELS BOVEN CAROUSEL OP MOBIEL */
+        .category-header { 
+            width: 100%; text-align: center; 
+            padding: 20px 0;
+            background: black;
+            position: relative;
+            z-index: 20;
+        }
+        
+        .category-header .top-label { font-size: 0.5rem; letter-spacing: 3px; opacity: 0.5; margin-bottom: 5px; color: var(--text); text-transform: uppercase; display: block; }
         .category-header .main-title { font-size: 0.7rem; letter-spacing: 10px; color: var(--accent); font-weight: 300; text-transform: uppercase; display: block; }
 
         @media screen and (min-width: 768px) {
+            .category-header { background: transparent; padding: 0; margin-bottom: 40px; }
             .category-header .top-label { font-size: 0.6rem; letter-spacing: 4px; }
             .category-header .main-title { font-size: 0.8rem; letter-spacing: 12px; }
         }
 
         .horizontal-scroll-container { display: flex; padding: 0; gap: 0; will-change: transform; align-items: center; }
 
-        /* AANPASSING VOOR FULLSCREEN CAROUSEL OP MOBIEL */
+        /* CAROUSEL AFBEELDINGEN PASSEND OP MOBIEL */
         .project-card {
-            min-width: 100vw; height: 100vh; flex-shrink: 0;
+            min-width: 100vw; 
+            height: calc(100vh - 100px); /* Ruimte voor de titel */
+            flex-shrink: 0;
             position: relative; overflow: hidden; background: var(--bg);
             display: flex; align-items: center; justify-content: center;
         }
@@ -436,16 +446,14 @@
         }
         
         .project-card img { 
-            width: 100%; height: 100%; object-fit: cover; 
+            width: 100%; height: 100%; 
+            object-fit: contain; /* Zorgt dat de volledige afbeelding altijd zichtbaar is */
             filter: grayscale(1); transition: 0.8s ease;
             display: block;
         }
         
-        @media screen and (min-width: 768px) {
-            .project-card img { object-fit: contain; } /* Op desktop liever contain voor overzicht */
-        }
-        
         .project-card:hover img { filter: grayscale(0); transform: scale(1.05); }
+
         .project-info { position: absolute; bottom: 30px; left: 30px; opacity: 1; z-index: 5; }
         @media screen and (min-width: 768px) {
             .project-info { bottom: 20px; left: 20px; opacity: 0; }
