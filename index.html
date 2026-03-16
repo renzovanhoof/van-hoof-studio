@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-T5HW4BMDYD"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -10,8 +9,7 @@
 
   gtag('config', 'G-T5HW4BMDYD');
 </script>
-<!-- Google tag (gtag.js) -->
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VHS | Architecture</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;900&display=swap" rel="stylesheet">
@@ -181,6 +179,17 @@
 
         @keyframes scrollLogos { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
+        /* ABOUT SECTIE */
+        #about { padding: 100px 5vw; background: #050505; text-align: center; }
+        .about-content { max-width: 800px; margin: 0 auto; }
+        .about-img { 
+            width: 300px; height: 300px; border-radius: 50%; object-fit: cover; 
+            margin-bottom: 40px; transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            filter: grayscale(1);
+        }
+        .about-img:hover { transform: scale(1.05) rotate(5deg); filter: grayscale(0); }
+        .about-text { font-size: 1.1rem; line-height: 1.8; opacity: 0.8; font-weight: 300; }
+
         .scroll-video-section {
             height: 300vh;
             position: relative;
@@ -216,8 +225,8 @@
                 top: 10vh;
             }
             #scroll-modelling .video-canvas { 
-                height: 100vh !important; /* Hoogte schermvullend */
-                width: auto !important;   /* Breedte schaalt mee en valt evt buiten beeld */
+                height: 100vh !important;
+                width: auto !important;   
                 max-width: none;
                 object-fit: contain !important;
                 filter: none !important;
@@ -225,7 +234,6 @@
                 left: 0; 
                 transform: none; 
             }
-            /* URBAN DESIGN ONGEWIJZIGD */
             #scroll-urban .video-canvas { 
                 width: 100vw; 
                 height: 100vh; 
@@ -576,6 +584,9 @@
     </nav>
 
     <div id="timeline-nav">
+        <a href="javascript:void(0)" onclick="smartPage('about')" class="timeline-item" data-sec="about">
+            <span class="timeline-label">About</span><div class="timeline-dot"></div>
+        </a>
         <a href="javascript:void(0)" onclick="smartPage('sec-ext')" class="timeline-item" data-sec="sec-freelance">
             <span class="timeline-label">Freelance</span><div class="timeline-dot"></div>
         </a>
@@ -593,6 +604,7 @@
     <div id="menu-toggle" onclick="toggleMenu()"><div class="menu-bars"></div></div>
     
     <div id="expanded-nav">
+        <a href="javascript:void(0)" onclick="smartPage('about'); toggleMenu()">About</a>
         <a href="javascript:void(0)" onclick="smartPage('sec-ext'); toggleMenu()">Freelance</a>
         <a href="javascript:void(0)" onclick="smartPage('technical-detailing'); toggleMenu()">BSc</a>
         <a href="javascript:void(0)" onclick="smartPage('gallery'); toggleMenu()">Gallery</a>
@@ -619,6 +631,19 @@
                 <img src="afbeeldingen/branch/7.png">
             </div>
         </div>
+
+        <section id="about">
+            <div class="about-content">
+                <img src="afbeeldingen/logo/5.png" alt="About Me" class="about-img">
+                <div class="section-header">
+                    <span class="top-label">STUDIO</span>
+                    <span class="main-title">ABOUT</span>
+                </div>
+                <p class="about-text">
+                    Als startend architect combineer ik technische diepgang met visuele verbeelding. Bij Van Hoof Studio breng ik concepten tot leven door architectuur te vertalen naar heldere, overtuigende visualisaties.
+                </p>
+            </div>
+        </section>
 
         <section class="category-section" id="sec-ext">
             <div class="sticky-wrapper">
@@ -843,7 +868,7 @@
             document.addEventListener('mousemove', e => { 
                 mx = e.clientX; my = e.clientY; 
                 const target = e.target;
-                if (target.closest('a') || target.closest('button') || target.closest('.project-card') || target.closest('#menu-toggle') || target.closest('.bsc-subpage-img')) {
+                if (target.closest('a') || target.closest('button') || target.closest('.project-card') || target.closest('#menu-toggle') || target.closest('.bsc-subpage-img') || target.closest('.about-img')) {
                     cursor.classList.add('hover-active');
                 } else { cursor.classList.remove('hover-active'); }
             });
@@ -886,7 +911,7 @@
                     const screenHeight = window.innerHeight;
 
                     if (screenWidth <= 768 && canvasId === "canvas-modelling") {
-                        const displayHeight = screenHeight; // 100% schermhoogte
+                        const displayHeight = screenHeight; 
                         const ratio = displayHeight / img.height;
                         canvas.height = displayHeight;
                         canvas.width = img.width * ratio;
@@ -949,6 +974,7 @@
 
             let current = "";
             const sections = [
+                { id: 'about', tag: 'about' },
                 { id: 'sec-ext', tag: 'sec-freelance' },
                 { id: 'scroll-modelling', tag: 'sec-freelance' },
                 { id: 'sec-int', tag: 'sec-freelance' },
